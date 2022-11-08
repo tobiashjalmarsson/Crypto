@@ -13,8 +13,6 @@ type Rotor struct {
 	shift int
 }
 
-const characters string = "abcdefghijklmnopqrstvwyuzx "
-
 func CreateRotor(to_encrypt string, shift int) *Rotor {
 	r := Rotor{unencrypted: strings.ToLower((to_encrypt))}
 	r.shift = shift

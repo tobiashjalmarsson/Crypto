@@ -2,9 +2,8 @@ package main
 
 import "example.com/crypto/enigma"
 func main() {
-	var to_encrypt string = "abcdefghijklmnopqrstvwyuzx " 
-	r := enigma.CreateRotor(to_encrypt, 2)
-	r.Encrypt()
-	r.Decrypt()
-	r.DisplayRotor()
+	var to_encrypt string = "abcdefg"
+	p := enigma.CreatePlugboard(to_encrypt)
+	p.Encrypt()
+	p.Decrypt()
 }

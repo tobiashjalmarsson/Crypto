@@ -64,3 +64,23 @@ Rotor tests ending
 /*
 Plugboard tests starting
 */
+
+func TestPlugEncrypt(t *testing.T) {
+	original_message := "abab"
+	expected_encrypted_message := "baba"
+	p := CreatePlugboard(original_message)
+	p.Encrypt()
+	if p.encrypted != expected_encrypted_message {
+		t.Fatalf(`p.Encrypt() yielded: %s, wanted: %s`, p.encrypted, original_message)
+	} 
+}
+
+func TestPlugEncryptDecrypt(t *testing.T) {
+	original_message := "abcdefghijklmnopqrstvwyuzx " 
+	p := CreatePlugboard(original_message)
+	p.Encrypt()
+	p.Decrypt()
+	if p.decrypted != original_message {
+		t.Fatalf(`p.Encrypt() (*) p.Decrypt() yielded: %s, wanted: %s`, p.decrypted, original_message)
+	} 
+}
