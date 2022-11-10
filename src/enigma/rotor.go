@@ -7,23 +7,21 @@ import (
 )
 
 type Rotor struct {
-	unencrypted string
-	encrypted string
-	decrypted string
+	reflector bool
 	shift int
 }
 
-func CreateRotor(to_encrypt string, shift int) *Rotor {
-	r := Rotor{unencrypted: strings.ToLower((to_encrypt))}
+func CreateRotor(shift int, reflector bool) *Rotor {
+	r := Rotor{reflector: reflector}
 	r.shift = shift
 	return &r
 }
 
-func (r *Rotor) Encrypt() {
+func (r *Rotor) Encrypt(message string) string {
 	// Create string builder to create encrypted string
 	var sb strings.Builder
 
-	for _, char := range r.unencrypted {
+	for _, char := range message {
 
 		char_index := strings.IndexRune(characters, char)
 		if char_index == -1 {
@@ -36,13 +34,13 @@ func (r *Rotor) Encrypt() {
 		sb.WriteByte(characters[new_index])
 	}
 
-	r.encrypted = sb.String()
+	return sb.String()
 }
 
-func (r *Rotor) Decrypt() {
+func (r *Rotor) Decrypt(message string) string {
 	var sb strings.Builder
 
-	for _, char := range r.encrypted {
+	for _, char := range message {
 
 		char_index := strings.IndexRune(characters, char)
 		if char_index == -1 {
@@ -55,12 +53,7 @@ func (r *Rotor) Decrypt() {
 		sb.WriteByte(characters[new_index])
 	}
 
-	r.decrypted = sb.String()
-
-
-	if r.decrypted != r.unencrypted {
-		log.Fatalf("Decrypted message(%s) does not match original(%s) message \n", r.decrypted, r.unencrypted)
-	}
+	return sb.String()
 }
 
 /*
@@ -75,10 +68,8 @@ func mod(a, b int) int {
 func (r *Rotor) DisplayRotor() {
 	fmt.Println("--------------------------------")
 	fmt.Println("Current contents of Rotor :")
-	fmt.Printf(" - Unencrypted string is: %s \n", r.unencrypted)
-	fmt.Printf(" - Encrypted string is: %s \n", r.encrypted)
-	fmt.Printf(" - Decrypted string is: %s \n", r.decrypted)
 	fmt.Println(" - Shift is: ", r.shift)
+	fmt.Printf(" - Reflector is: %t \n", r.reflector)
 	fmt.Println("--------------------------------")
 }
 

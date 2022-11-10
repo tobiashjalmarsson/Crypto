@@ -5,33 +5,35 @@ import (
 )
 
 type Plugboard struct {
-	unencrypted string
-	encrypted string
-	decrypted string
+	board string
 }
 
 
-func CreatePlugboard(original_message string) *Plugboard {
-	return &Plugboard{unencrypted: strings.ToLower(original_message)}
+func CreatePlugboard(board string) *Plugboard {
+	if board == "" {
+		return &Plugboard{board: characters}
+	} else {
+		return &Plugboard{board: board}
+	}
 }
 
-func (p *Plugboard) Encrypt() {
+func (p *Plugboard) Encrypt(message string) string {
 	var sb strings.Builder
 	
-	for _, char := range p.unencrypted {
-		char_pos := strings.IndexRune(characters, char)
+	for _, char := range message {
+		char_pos := strings.IndexRune(p.board, char)
 		sb.WriteByte(default_board[char_pos])
 	}
-	p.encrypted = sb.String()
+	return sb.String()
 }
 
-func (p *Plugboard) Decrypt() {
+func (p *Plugboard) Decrypt(message string) string {
 	var sb strings.Builder
 
-	for _, char := range p.encrypted {
-		char_pos := strings.IndexRune(characters, char)
+	for _, char := range message {
+		char_pos := strings.IndexRune(p.board, char)
 		sb.WriteByte(default_board[char_pos])
 	}
 
-	p.decrypted = sb.String()
+	return sb.String()
 }
