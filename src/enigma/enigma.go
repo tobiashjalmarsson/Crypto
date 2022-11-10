@@ -38,9 +38,6 @@ func (e *Enigma) IncrementRotations() {
 
 func (e *Enigma) UpdateShifts(rotations int) {
 	for index, rotor := range e.rotors {
-		// TODO update indexes of rotors
-		// Rotors[0].shift = rotations
-		// Rotors[i].shift = rotations/(i*26)
 		if index == 0 {
 			rotor.SetShift(rotations)
 		} else {
@@ -67,7 +64,7 @@ func (e *Enigma) EncryptDecrypt(message string) string {
 		}
 		// (2) Update shift
 
-		e.UpdateShifts(index)
+		e.UpdateShifts(index + shift)
 		e.IncrementRotations()
 
 		// (3) Push character to sb
